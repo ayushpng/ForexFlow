@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { registerUser } from "../../services/authService";
 import toast from "react-hot-toast";
+
 import AuthLayout from "../../components/layout/AuthLayout";
 import Logo from "../../components/ui/Logo";
 import Card from "../../components/ui/Card";
@@ -18,7 +19,11 @@ function Register() {
     full_name: "",
     email: "",
     phone: "",
+    phone2: "",
     address: "",
+    shop_name: "",
+    shop_address: "",
+    license_number: "",
     password: "",
     confirmPassword: "",
     role: "",
@@ -33,27 +38,34 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (
-  !formData.full_name.trim() ||
-  !formData.email.trim() ||
-  !formData.phone.trim() ||
-  !formData.address.trim() ||
-  !formData.password.trim() ||
-  !formData.confirmPassword.trim() ||
-  !formData.role
-) {
-  toast.error("Please fill in all fields.");
-  return;
-}
 
-    if (formData.password !== formData.confirmPassword) {
-      toast.error("Passwords do not match");
+    if (
+      !formData.full_name.trim() ||
+      !formData.email.trim() ||
+      !formData.phone.trim() ||
+      !formData.address.trim() ||
+      !formData.password.trim() ||
+      !formData.confirmPassword.trim() ||
+      !formData.role
+    ) {
+      toast.error("Please fill in all required fields.");
       return;
     }
 
-    if (formData.role === "") {
-      toast.error("Please select a role");
+    if (formData.password !== formData.confirmPassword) {
+      toast.error("Passwords do not match.");
       return;
+    }
+
+    if (formData.role === "shopkeeper") {
+      if (
+        !formData.shop_name.trim() ||
+        !formData.shop_address.trim() ||
+        !formData.license_number.trim()
+      ) {
+        toast.error("Please complete all shop details.");
+        return;
+      }
     }
 
     try {
@@ -61,7 +73,11 @@ function Register() {
         full_name: formData.full_name,
         email: formData.email,
         phone: formData.phone,
+        phone2: formData.phone2,
         address: formData.address,
+        shop_name: formData.shop_name,
+        shop_address: formData.shop_address,
+        license_number: formData.license_number,
         password: formData.password,
         role: formData.role,
       });
@@ -70,14 +86,11 @@ function Register() {
 
       navigate("/login");
     } catch (error) {
-     console.log(error);
-console.log(error.response);
-
-toast.error(
-  error.response?.data?.message ||
-  error.message ||
-  "Registration Failed"
-);
+      toast.error(
+        error.response?.data?.message ||
+        error.message ||
+        "Registration Failed"
+      );
     }
   };
 
@@ -95,6 +108,7 @@ toast.error(
         </p>
 
         <form onSubmit={handleSubmit}>
+
           <InputField
             label="Full Name"
             type="text"
@@ -131,6 +145,58 @@ toast.error(
             onChange={handleChange}
           />
 
+          <SelectField
+            label="Register As"
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            options={[
+              { value: "", label: "Select Role" },
+              { value: "customer", label: "Customer" },
+              { value: "shopkeeper", label: "Shop" },
+            ]}
+          />
+
+          {formData.role === "shopkeeper" && (
+            <>
+              <InputField
+                label="Shop Name"
+                type="text"
+                name="shop_name"
+                placeholder="Enter shop name"
+                value={formData.shop_name}
+                onChange={handleChange}
+              />
+
+              <InputField
+                label="Shop Address"
+                type="text"
+                name="shop_address"
+                placeholder="Enter shop address"
+                value={formData.shop_address}
+                onChange={handleChange}
+              />
+
+              <InputField
+                label="License Number"
+                type="text"
+                name="license_number"
+                placeholder="Enter license number"
+                value={formData.license_number}
+                onChange={handleChange}
+              />
+
+              <InputField
+                label="Alternate Phone (Optional)"
+                type="text"
+                name="phone2"
+                placeholder="98XXXXXXXX"
+                value={formData.phone2}
+                onChange={handleChange}
+              />
+            </>
+          )}
+
           <PasswordField
             label="Password"
             name="password"
@@ -147,22 +213,11 @@ toast.error(
             onChange={handleChange}
           />
 
-          <SelectField
-            label="Register As"
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-            options={[
-              { value: "", label: "Select Role" },
-              { value: "customer", label: "Customer" },
-              { value: "shopkeeper", label: "Shop" },
-            ]}
-          />
-
           <PrimaryButton
             text="Create Account"
             type="submit"
           />
+
         </form>
 
         <p className="text-center text-slate-600 mt-6">
@@ -175,6 +230,7 @@ toast.error(
             Login
           </Link>
         </p>
+
       </Card>
     </AuthLayout>
   );

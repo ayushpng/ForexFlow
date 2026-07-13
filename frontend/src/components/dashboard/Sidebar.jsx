@@ -1,9 +1,15 @@
 import {
   LayoutDashboard,
+  Users,
+  Building2,
+  BadgeDollarSign,
   ArrowLeftRight,
   History,
   User,
+  FileBarChart2,
+  Settings,
   LogOut,
+  CircleDollarSign,
 } from "lucide-react";
 
 import { NavLink, useNavigate } from "react-router-dom";
@@ -18,68 +24,142 @@ function Sidebar({ role }) {
     navigate("/login");
   };
 
-  const dashboardPath =
-    role === "customer"
-      ? "/customer/dashboard"
-      : role === "shopkeeper"
-      ? "/shop/dashboard"
-      : "/admin/dashboard";
+  const menus = {
+    admin: [
+      {
+        title: "Dashboard",
+        icon: <LayoutDashboard size={20} />,
+        path: "/admin/dashboard",
+      },
+      {
+        title: "Pending Shops",
+        icon: <Building2 size={20} />,
+        path: "/admin/dashboard",
+      },
+      {
+        title: "Currencies",
+        icon: <CircleDollarSign size={20} />,
+        path: "#",
+      },
+      {
+        title: "Rate Limits",
+        icon: <BadgeDollarSign size={20} />,
+        path: "#",
+      },
+      {
+        title: "Customers",
+        icon: <Users size={20} />,
+        path: "#",
+      },
+      {
+        title: "Reports",
+        icon: <FileBarChart2 size={20} />,
+        path: "#",
+      },
+      {
+        title: "Settings",
+        icon: <Settings size={20} />,
+        path: "#",
+      },
+    ],
+
+    shopkeeper: [
+      {
+        title: "Dashboard",
+        icon: <LayoutDashboard size={20} />,
+        path: "/shop/dashboard",
+      },
+      {
+        title: "Today's Rates",
+        icon: <BadgeDollarSign size={20} />,
+        path: "#",
+      },
+      {
+        title: "Exchange Requests",
+        icon: <ArrowLeftRight size={20} />,
+        path: "#",
+      },
+      {
+        title: "Transactions",
+        icon: <History size={20} />,
+        path: "#",
+      },
+      {
+        title: "Profile",
+        icon: <User size={20} />,
+        path: "#",
+      },
+    ],
+
+    customer: [
+      {
+        title: "Dashboard",
+        icon: <LayoutDashboard size={20} />,
+        path: "/customer/dashboard",
+      },
+      {
+        title: "Compare Rates",
+        icon: <BadgeDollarSign size={20} />,
+        path: "#",
+      },
+      {
+        title: "Exchange Currency",
+        icon: <ArrowLeftRight size={20} />,
+        path: "#",
+      },
+      {
+        title: "History",
+        icon: <History size={20} />,
+        path: "#",
+      },
+      {
+        title: "Profile",
+        icon: <User size={20} />,
+        path: "#",
+      },
+    ],
+  };
 
   return (
-    <aside className="w-64 min-h-screen bg-emerald-700 text-white flex flex-col">
-
-      <div className="text-center py-8 border-b border-emerald-600">
-
-        <h1 className="text-3xl font-bold">
+    <aside className="w-72 min-h-screen bg-gradient-to-bg from-emerald-800 to-emerald-600 text-white flex flex-col shadow-2xl">
+      <div className="py-8 text-center border-b border-emerald-500">
+        <h1 className="text-3xl font-extrabold text-slate-800 tracking-wide">
           ForexFlow
         </h1>
 
+        <p className="text-sm text-emerald-600 font-medium mt-2 capitalize">
+          {role} Panel
+        </p>
       </div>
 
-      <nav className="flex-1 p-5 space-y-2">
-
-        <NavLink
-          to={dashboardPath}
-          className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-emerald-600"
-        >
-          <LayoutDashboard size={20} />
-          Dashboard
-        </NavLink>
-
-        <NavLink
-          to="#"
-          className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-emerald-600"
-        >
-          <ArrowLeftRight size={20} />
-          Exchange
-        </NavLink>
-
-        <NavLink
-          to="#"
-          className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-emerald-600"
-        >
-          <History size={20} />
-          History
-        </NavLink>
-
-        <NavLink
-          to="#"
-          className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-emerald-600"
-        >
-          <User size={20} />
-          Profile
-        </NavLink>
-
+      <nav className="flex-1 px-4 py-6 space-y-2">
+        {menus[role]?.map((menu) => (
+          <NavLink
+            key={menu.title}
+            to={menu.path}
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
+                isActive
+                  ? "bg-white text-emerald-700 font-semibold shadow"
+                  : "hover:bg-emerald-500"
+              }`
+            }
+          >
+            {menu.icon}
+            {menu.title}
+          </NavLink>
+        ))}
       </nav>
 
-      <button
-        onClick={handleLogout}
-        className="flex items-center gap-3 px-6 py-5 bg-red-600 hover:bg-red-700 transition"
-      >
-        <LogOut size={20} />
-        Logout
-      </button>
-
+      <div className="p-4">
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 rounded-xl py-3 transition"
+        >
+          <LogOut size={20} />
+          Logout
+        </button>
+      </div>
     </aside>
   );
 }
