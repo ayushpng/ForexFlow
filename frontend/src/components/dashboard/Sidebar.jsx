@@ -3,6 +3,7 @@ import {
   Users,
   Building2,
   BadgeDollarSign,
+  BanknoteArrowDown,
   ArrowLeftRight,
   History,
   User,
@@ -10,6 +11,7 @@ import {
   Settings,
   LogOut,
   CircleDollarSign,
+  Coins,
 } from "lucide-react";
 
 import { NavLink, useNavigate } from "react-router-dom";
@@ -35,6 +37,11 @@ function Sidebar({ role }) {
         title: "Pending Shops",
         icon: <Building2 size={20} />,
         path: "/admin/dashboard",
+      },
+      {
+        title: "Manage Rates",
+        icon: <Coins size={20} />,
+        path: "/admin/rates",
       },
       {
         title: "Currencies",
@@ -72,7 +79,7 @@ function Sidebar({ role }) {
       {
         title: "Today's Rates",
         icon: <BadgeDollarSign size={20} />,
-        path: "#",
+        path: "/shop/rates",
       },
       {
         title: "Exchange Requests",
@@ -100,7 +107,7 @@ function Sidebar({ role }) {
       {
         title: "Compare Rates",
         icon: <BadgeDollarSign size={20} />,
-        path: "#",
+        path: "/customer/compare-rates",
       },
       {
         title: "Exchange Currency",
@@ -140,8 +147,8 @@ function Sidebar({ role }) {
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
                 isActive
-                  ? "bg-white text-emerald-700 font-semibold shadow"
-                  : "hover:bg-emerald-500"
+                  ? "bg-emerald-100 text-emerald-700 font-semibold shadow"
+                  : "text-emerald-700 hover:bg-emerald-50"
               }`
             }
           >

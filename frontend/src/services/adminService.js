@@ -13,3 +13,10 @@ export const approveShop = (id) => {
 export const rejectShop = (id) => {
   return axios.put(`${API}/reject/${id}`);
 };
+
+export const saveAdminRate = (currencyId, data) => {
+  return axios.put(
+    `${API}/rates/${currencyId}`,
+    data
+  );
+}

@@ -1,20 +1,24 @@
 const express = require("express");
 const router = express.Router();
 
-// controllers (we will create next)
 const {
   getPendingShops,
   approveShop,
   rejectShop,
 } = require("../controllers/adminController");
 
-// GET all pending shopkeepers
+const {
+  getAdminRates,
+  saveAdminRate,
+} = require("../controllers/adminRateController");
+
+// Shop Management
 router.get("/pending-shops", getPendingShops);
-
-// Approve shopkeeper
 router.put("/approve/:id", approveShop);
-
-// Reject shopkeeper
 router.put("/reject/:id", rejectShop);
+
+// Exchange Rates
+router.get("/rates", getAdminRates);
+router.put("/rates/:currencyId", saveAdminRate);
 
 module.exports = router;

@@ -1,4 +1,13 @@
+const path = require("path");
+require("dotenv").config({
+  path: path.join(__dirname, "..", ".env"),
+});
+
 const mysql = require("mysql2");
+
+console.log("DB_HOST:", process.env.DB_HOST);
+console.log("DB_USER:", process.env.DB_USER);
+console.log("DB_NAME:", process.env.DB_NAME);
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
@@ -19,7 +28,6 @@ pool.getConnection((err, connection) => {
   }
 
   console.log("✅ MySQL Connected Successfully");
-
   connection.release();
 });
 

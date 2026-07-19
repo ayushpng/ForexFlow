@@ -6,14 +6,15 @@ import Register from "../pages/auth/Register";
 import CustomerDashboard from "../pages/customer/Dashboard";
 import ShopDashboard from "../pages/shop/Dashboard";
 import AdminDashboard from "../pages/admin/Dashboard";
-
+import ManageRates from "../pages/admin/ManageRates";
 import ProtectedRoute from "../components/ProtectedRoute";
-
+import ShopManageRates from "../pages/shop/ManageRates";
+import CompareRates from "../pages/customer/CompareRates";
+import ShopDetails from "../pages/customer/ShopDetails";
 function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-
         {/* Public Routes */}
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
@@ -28,8 +29,18 @@ function AppRoutes() {
             </ProtectedRoute>
           }
         />
+        <Route path="/customer/compare-rates" element={<CompareRates />} />
 
         {/* Shopkeeper */}
+        <Route
+          path="/shop/rates"
+          element={
+            <ProtectedRoute allowedRoles={["shopkeeper"]}>
+              <ShopManageRates />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/customer/shop/:id" element={<ShopDetails />} />
         <Route
           path="/shop/dashboard"
           element={
@@ -48,7 +59,15 @@ function AppRoutes() {
             </ProtectedRoute>
           }
         />
-
+        {/* Manage Rates */}
+        <Route
+          path="/admin/rates"
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <ManageRates />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
