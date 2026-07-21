@@ -190,8 +190,53 @@ const saveShopRate = (req, res) => {
     });
   });
 };
+// =====================================
+// Get Shopkeeper Profile
+// =====================================
+const getProfile = (req, res) => {
+  const shopId = req.user.id;
+
+  const sql = `
+    SELECT
+  id,
+  full_name,
+  email,
+  phone,
+  address,
+  shop_name,
+  shop_address,
+  license_number,
+  phone2,
+  status,
+  created_at
+FROM users
+WHERE id = ?
+  `;
+
+  db.query(sql, [shopId], (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    }
+
+    if (result.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Profile not found.",
+      });
+    }
+
+    res.json({
+      success: true,
+      data: result[0],
+    });
+  });
+};
 
 module.exports = {
   getShopRates,
   saveShopRate,
+  getProfile,
 };

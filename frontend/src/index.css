@@ -12,3 +12,31 @@ body {
     "Segoe UI Symbol",
     sans-serif;
 }
+@media print {
+
+  body {
+    background: white;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  #receipt,
+  #receipt * {
+    visibility: visible;
+  }
+
+  #receipt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+}

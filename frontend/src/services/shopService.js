@@ -19,3 +19,17 @@ export const saveShopRate = (currencyId, data) => {
     },
   });
 };
+export const getProfile = async () => {
+  const token = localStorage.getItem("token");
+
+  const res = await axios.get(
+    "http://localhost:5000/api/shop/profile",
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return res.data.data;
+};

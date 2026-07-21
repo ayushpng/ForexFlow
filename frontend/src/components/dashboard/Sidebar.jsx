@@ -81,20 +81,16 @@ function Sidebar({ role }) {
         icon: <BadgeDollarSign size={20} />,
         path: "/shop/rates",
       },
-      {
-        title: "Exchange Requests",
-        icon: <ArrowLeftRight size={20} />,
-        path: "#",
-      },
+      ,
       {
         title: "Transactions",
         icon: <History size={20} />,
-        path: "#",
+        path: "/shop/transactions",
       },
       {
         title: "Profile",
         icon: <User size={20} />,
-        path: "#",
+        path: "/shop/profile",
       },
     ],
 
