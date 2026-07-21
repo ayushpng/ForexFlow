@@ -28,7 +28,10 @@ const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const shopRoutes = require("./routes/shopRoutes");
 const customerRoutes = require("./routes/customerRoutes");
+const transactionRoutes = require("./routes/transactionRoutes");
 
+
+app.use("/api/transactions", transactionRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/shop", shopRoutes);

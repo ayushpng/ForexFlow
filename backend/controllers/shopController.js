@@ -4,7 +4,7 @@ const db = require("../config/db");
 // Get Shop Rates
 // ==============================
 const getShopRates = (req, res) => {
-  const shopId = 1; // Later this will come from logged-in user
+  const shopId = req.user.id;
 
   const sql = `
     SELECT
@@ -74,7 +74,7 @@ const getShopRates = (req, res) => {
 // Save Shop Rate
 // ==============================
 const saveShopRate = (req, res) => {
-  const shopId = req.body.shop_id;
+  const shopId = req.user.id;
   const currencyId = req.params.currencyId;
 
   const { buy_rate, sell_rate } = req.body;
